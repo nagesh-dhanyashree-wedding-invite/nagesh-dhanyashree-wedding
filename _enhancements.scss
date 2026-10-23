@@ -1,0 +1,33 @@
+@use "variables" as *;
+
+// ---- Additions: scroll progress, current-section nav, gallery fade, polish ----
+::selection { background: $maroon; color: $gold-shine; }
+
+h1, h2, h3 { text-wrap: balance; }
+.sub, .inv2, .ec p { text-wrap: pretty; }
+
+// thin gold line under the top bar that fills as you scroll
+.topbar .progress {
+  position: absolute; left: 0; bottom: -1px; width: 100%; height: 2px;
+  transform: scaleX(0); transform-origin: 0 50%;
+  background: linear-gradient(90deg, $gold-text, $gold-shine, $gold-text);
+  pointer-events: none;
+}
+
+// current section in the nav
+nav a.on { color: #fff; }
+nav a.on::after {
+  content: ""; position: absolute; left: 10px; right: 10px; bottom: 7px;
+  height: 1px; background: $gold;
+}
+
+// gallery cross-fade when the photo changes
+.slide div { transition: opacity .18s ease; }
+.slide.swap div { opacity: 0; }
+
+// larger tap targets for phone users
+.ab a, form button, .wa, .lang { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .slide div { transition: none; }
+}

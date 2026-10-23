@@ -1,0 +1,24 @@
+@use "variables" as *;
+
+@media(max-width:520px){.names{gap:14px}
+.names h3{font-size:26px}
+.names p{font-size:15px}
+.ei{grid-template-columns:52px minmax(0,1fr);gap:10px}
+.bd{width:52px;height:52px}
+.bd b{font-size:22px}
+.bd span{font-size:10px}
+.tl::before{left:25px}
+.ec{padding:16px 14px}
+.ec img{width:58px}
+.ab a{flex:1 1 140px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}
+#cover{transition:none}
+.pt{display:none}
+.hp svg,.seal{animation:none}}
+.seg{display:inline-flex;flex:none;align-self:center;margin:8px 10px 8px 0;border:1px solid var(--gold);border-radius:999px;padding:2px;background:#0003}
+.lg{min-height:36px;min-width:52px;padding:0 12px;border:0;border-radius:999px;background:transparent;color:var(--gl);font:600 14px Mukta,sans-serif;cursor:pointer}
+.lg[data-l=kn]{font-family:"Noto Serif Kannada",serif}
+.lg.on{background:var(--gold);color:var(--deep)}
+.cseg{margin:0 auto 16px;background:transparent;border-color:var(--maroon);background:#5a142408}
+.cseg .lg{color:var(--maroon)}
+.cseg .lg.on{background:var(--maroon);color:var(--gl)}

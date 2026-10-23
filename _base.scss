@@ -1,0 +1,19 @@
+@use "variables" as *;
+
+:root{color-scheme:light;--paper:#{$paper};--ink:#{$ink};--maroon:#{$maroon};--deep:#{$deep};--gold:#{$gold};--gt:#{$gold-text};--gl:#{$gold-light};--soft:#{$soft};--line:#{$line};
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-padding-top:60px;scroll-behavior:smooth}
+html,body{max-width:100%;overflow-x:hidden}
+img,svg{max-width:100%}
+section,footer,nav{max-width:100%}
+.topbar{position:sticky;top:0;z-index:10;display:flex;align-items:stretch;background:var(--deep);border-bottom:1px solid var(--gold);padding-top:env(safe-area-inset-top,0px)}
+nav{flex:1;min-width:0;display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none;padding:0 8px 0 12px}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.65 Mukta,system-ui,sans-serif}
+body.lock{overflow:hidden}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:700;line-height:1.1;margin:0}
+img{max-width:100%}
+.mx{mix-blend-mode:multiply}
+button{cursor:pointer;font:600 16px Mukta,sans-serif}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.gold{background:linear-gradient(100deg,$gold 0%,$gold-shine 35%,#c9983a 60%,$gold-shine 85%);-webkit-background-clip:text;background-clip:text;color:transparent}

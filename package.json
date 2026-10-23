@@ -1,0 +1,11 @@
+{
+  "name": "nagesh-dhanyashree-wedding-invite",
+  "private": true,
+  "scripts": {
+    "build:css": "sass scss/main.scss css/style.css --style=expanded --no-source-map",
+    "watch:css": "sass --watch scss/main.scss css/style.css --no-source-map"
+  },
+  "devDependencies": {
+    "sass": "^1.77.0"
+  }
+}
