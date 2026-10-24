@@ -69,6 +69,8 @@ const C = {
         "Our engagement ceremony"
       ],
       "map": "13.9876238,74.5597854"
+    ,
+      "img": "event-engagement.jpg"
     },
     {
       "t": [
@@ -87,10 +89,12 @@ const C = {
         "The wedding ceremony"
       ],
       "map": "13.9876238,74.5597854"
+    ,
+      "img": "event-wedding.jpg"
     },
     {
       "t": [
-        "Reception & Sri Satyanarayana Pooja"
+        "Reception & Pooja"
       ],
       "d": [
         "November 28, 2026 • Saturday"
@@ -105,6 +109,8 @@ const C = {
         "Pooja followed by lunch"
       ],
       "map": "Saraswathi Sabha Sadana Chitpady Udupi"
+    ,
+      "img": "event-pooja-reception.jpg"
     }
   ]
 };
