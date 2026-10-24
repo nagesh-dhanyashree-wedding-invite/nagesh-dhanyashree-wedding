@@ -57,9 +57,10 @@ $('open').onclick=()=>{
     card.style.opacity='1';
     card.style.transform='none';
 
-    /* Wait 3 seconds for user to see the card, then slide cover up */
+    /* Wait 3 seconds for user to see the card, then slide cover up and unlock scroll */
     setTimeout(()=>{
       cv.classList.add('open');
+      document.body.classList.remove('lock');
       setTimeout(()=>{cv.style.display='none';},1200);
     },3000);
   },flapWait);
