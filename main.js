@@ -100,3 +100,33 @@ document.addEventListener('keydown',e=>{
   env.querySelector('.env-in').appendChild(btn);
   cv.insertBefore(env,card);
 })();
+
+/* ===== Preloader ===== */
+(function(){
+  var pl=document.getElementById('preloader');
+  if(!pl)return;
+  window.addEventListener('load',function(){
+    setTimeout(function(){pl.classList.add('gone');},1200);
+  });
+  // fallback: remove after 4 s regardless
+  setTimeout(function(){if(pl)pl.classList.add('gone');},4000);
+})();
+
+/* ===== Reopen cover button ===== */
+(function(){
+  var btn=document.querySelector('.nav-reopen');
+  if(!btn)return;
+  document.getElementById('cover').addEventListener('transitionend',function show(){
+    btn.classList.add('show');
+    document.getElementById('cover').removeEventListener('transitionend',show);
+  });
+  btn.addEventListener('click',function(){
+    var cv=document.getElementById('cover');
+    cv.style.display='flex';
+    cv.classList.remove('open');
+    document.body.classList.add('lock');
+    btn.classList.remove('show');
+    // small delay lets display:flex paint before removing transition blocker
+    requestAnimationFrame(function(){cv.style.opacity=1;});
+  });
+})();
