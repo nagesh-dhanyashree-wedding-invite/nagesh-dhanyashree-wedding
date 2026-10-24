@@ -26,7 +26,6 @@ function render(){
   q('[data-t]',e=>e.textContent=t[e.dataset.t]);
   $('fn').placeholder=t.nm;$('fm').placeholder=t.ms;
   $('hero').style.setProperty('--hbg',"url('"+new URL(C.couple,document.baseURI).href+"')");
-  $('hph').style.backgroundImage="url('"+(C.ghibli||C.couple)+"')";
   $('names').innerHTML='<div class="couple-ghibli"><img src="'+ART.gh+'" alt="Illustrated portrait"></div><figure><div class="arch sm" role="img" aria-label="'+esc(t.n1)+'" style="background-image:url('+ART.p1+')"></div><h3>'+esc(t.n1)+'</h3><b>'+t.gh+'</b><p class="q">“'+esc(t.qg)+'”</p></figure><figure><div class="arch sm" role="img" aria-label="'+esc(t.n2)+'" style="background-image:url('+ART.p2+')"></div><h3>'+esc(t.n2)+'</h3><b>'+t.bh+'</b><p class="q">“'+esc(t.qb)+'”</p></figure>';
   $('story-list').innerHTML=t.story.map(x=>'<div class="si"><h3>'+esc(x[0])+'</h3><p>'+esc(x[1])+'</p></div>').join('');
   $('trad').innerHTML=t.trad.map(x=>'<details><summary>'+esc(x[0])+'</summary><p>'+esc(x[1])+'</p></details>').join('');
