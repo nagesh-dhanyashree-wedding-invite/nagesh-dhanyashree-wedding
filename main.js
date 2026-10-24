@@ -122,11 +122,11 @@ document.addEventListener('keydown',e=>{
 (function(){
   var pl=document.getElementById('preloader');
   if(!pl)return;
-  window.addEventListener('load',function(){
-    setTimeout(function(){pl.classList.add('gone');},1200);
-  });
-  // fallback: remove after 4 s regardless
-  setTimeout(function(){if(pl)pl.classList.add('gone');},4000);
+  function dismiss(){pl.classList.add('gone');}
+  // Remove after load + short delay
+  window.addEventListener('load',function(){setTimeout(dismiss,800);});
+  // Hard fallback: always remove after 2.5 s regardless of asset load state
+  setTimeout(dismiss,2500);
 })();
 
 /* ===== Reopen cover button ===== */
