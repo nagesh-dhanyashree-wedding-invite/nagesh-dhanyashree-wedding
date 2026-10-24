@@ -43,7 +43,24 @@ $('open').onclick=()=>{
   const cv=$('cover');
   if(cv.classList.contains('unfold'))return;
   Player.start();setIcon(); /* inside the tap so the browser allows audio */
-  cv.classList.add('unfold'); /* flap opens, card rises out */
-  const wait=matchMedia('(prefers-reduced-motion: reduce)').matches?0:1650;
-  setTimeout(()=>{cv.classList.add('open');document.body.classList.remove('lock');setTimeout(()=>{cv.style.display='none';},1200);},wait);
+  cv.classList.add('unfold'); /* flap opens */
+
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const flapWait=reduced?0:1650;
+
+  /* After flap animation, show card with 3-second delay then slide cover away */
+  setTimeout(()=>{
+    const card=cv.querySelector('.card');
+    /* Reveal the card */
+    card.style.transition='opacity 0.6s ease, transform 0.9s cubic-bezier(.2,.8,.2,1)';
+    card.style.visibility='visible';
+    card.style.opacity='1';
+    card.style.transform='none';
+
+    /* Wait 3 seconds for user to see the card, then slide cover up */
+    setTimeout(()=>{
+      cv.classList.add('open');
+      setTimeout(()=>{cv.style.display='none';},1200);
+    },3000);
+  },flapWait);
 };

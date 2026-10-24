@@ -99,6 +99,10 @@ document.addEventListener('keydown',e=>{
   env.querySelector('.ev-inv').textContent=$('cinv').textContent;
   env.querySelector('.env-in').appendChild(btn);
   cv.insertBefore(env,card);
+
+  /* Keep card hidden until envelope opens */
+  card.style.visibility='hidden';
+  card.style.opacity='0';
 })();
 
 
@@ -139,7 +143,6 @@ document.addEventListener('keydown',e=>{
     cv.classList.remove('open');
     document.body.classList.add('lock');
     btn.classList.remove('show');
-    // small delay lets display:flex paint before removing transition blocker
     requestAnimationFrame(function(){cv.style.opacity=1;});
   });
 })();

@@ -344,7 +344,8 @@ nav a.on::after{left:24px;right:auto;width:26px;bottom:8px}
 /* ===== Envelope cover: flap opens, invitation card rises out ===== */
 .env{grid-area:1/1;position:relative;z-index:2;width:min(340px,88vw);display:flex;flex-direction:column;align-items:center}
 .card{grid-area:1/1;z-index:3;transition:opacity .6s ease .45s,transform .9s cubic-bezier(.2,.8,.2,1) .45s}
-#cover:not(.unfold) .card{opacity:0;transform:translateY(60px) scale(.55);pointer-events:none;transition:none}
+/* Card hidden until JS reveals it after envelope opens */
+#cover .card{pointer-events:none}
 .ev-inv{margin:0 0 14px;color:#f7dc9a;font:600 15px Mukta,sans-serif;text-align:center}
 .env-in{position:relative;width:100%;aspect-ratio:340/230;perspective:1000px;transition:transform .6s ease .5s,opacity .45s ease .5s}
 .env-in svg{position:absolute;left:0;width:100%;overflow:visible}
@@ -384,9 +385,10 @@ nav a.on::after{left:24px;right:auto;width:26px;bottom:8px}
 
 /* ── IMPROVEMENTS ───────────────────────────────────────────────── */
 
-/* 1. Hero arch → perfect circle so mandala wraps it cleanly */
+/* 1. Hero monogram inside rotating mandala */
 .arch{border-radius:50%!important;background-position:50% 20%!important;outline-radius:50%}
-#hero .arch{width:58%;aspect-ratio:1!important}
+.hero-mono{width:52%;aspect-ratio:1;position:relative;z-index:1}
+#hero .arch{display:none}
 
 /* 2. Ghibli couple image in couple section */
 .couple-ghibli{width:100%;max-width:420px;margin:0 auto 28px;grid-column:1/-1}
@@ -432,14 +434,15 @@ section.s.dark .sub{color:rgba(230,196,118,.8)}
 .ev-back,.ev-front,.ev-flap{display:block;width:100%}
 .ev-flap{position:absolute;top:0;left:0;transform-origin:top center;transition:transform 1s cubic-bezier(.4,0,.2,1)}
 .unfold .ev-flap{transform:rotateX(-180deg)}
-.ev-names{position:absolute;bottom:28px;left:0;right:0;text-align:center;font:italic 600 22px "Cormorant Garamond",serif;color:var(--gl)}
+/* Names sit in the lower quarter of the envelope, well below the seal */
+.ev-names{position:absolute;bottom:10px;left:0;right:0;text-align:center;font:italic 600 20px "Cormorant Garamond",serif;color:var(--gl);pointer-events:none}
 .ev-inv{text-align:center;font:600 14px Mukta,sans-serif;color:var(--gl);margin:0 0 12px;letter-spacing:.06em}
 .ev-hint{text-align:center;color:rgba(230,196,118,.7);font-size:14px;margin:10px 0 0;letter-spacing:.06em}
-.env .seal{display:block;margin:18px auto 0}
+/* Seal sits at the fold line; names are in lower 25% so no overlap */
+.env-in .seal{position:absolute;left:50%;top:55.65%;transform:translate(-50%,-50%);z-index:4}
 
-/* 11. Card exits upward after envelope opens */
-.unfold .card{animation:riseOut 1.65s .9s cubic-bezier(.3,0,.2,1) forwards}
-@keyframes riseOut{0%{transform:translateY(60px);opacity:0}30%{opacity:1}100%{transform:translateY(-140px);opacity:1}}
+/* 11. Card is hidden until envelope opens — revealed by JS after 3s delay */
+/* riseOut animation removed; card reveal is handled in music.js */
 
 /* 12. Burger / hamburger menu on mobile */
 .brand{color:var(--gl);font:700 18px "Cormorant Garamond",serif;text-decoration:none;padding:0 12px;display:flex;align-items:center;flex:none}
