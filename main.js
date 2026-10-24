@@ -101,6 +101,19 @@ document.addEventListener('keydown',e=>{
   cv.insertBefore(env,card);
 })();
 
+
+/* Hashtag copy to clipboard */
+(function(){
+  const ht=document.querySelector('.ht');
+  if(!ht)return;
+  ht.title='Tap to copy hashtag';
+  ht.addEventListener('click',()=>{
+    navigator.clipboard&&navigator.clipboard.writeText(ht.textContent.trim()).then(()=>{
+      ht.classList.add('copied');setTimeout(()=>ht.classList.remove('copied'),2000);
+    }).catch(()=>{});
+  });
+})();
+
 /* ===== Preloader ===== */
 (function(){
   var pl=document.getElementById('preloader');

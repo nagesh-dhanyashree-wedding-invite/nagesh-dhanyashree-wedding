@@ -44,6 +44,6 @@ $('open').onclick=()=>{
   if(cv.classList.contains('unfold'))return;
   Player.start();setIcon(); /* inside the tap so the browser allows audio */
   cv.classList.add('unfold'); /* flap opens, card rises out */
-  const wait=matchMedia('(prefers-reduced-motion: reduce)').matches?0:3000;
+  const wait=matchMedia('(prefers-reduced-motion: reduce)').matches?0:1650;
   setTimeout(()=>{cv.classList.add('open');document.body.classList.remove('lock');setTimeout(()=>{cv.style.display='none';},1200);},wait);
 };

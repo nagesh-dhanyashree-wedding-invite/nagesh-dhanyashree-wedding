@@ -236,11 +236,12 @@ const S = {
 const DAY = ["25","26","28"], CAL = ["20261125T120000Z/20261125T150000Z","20261126T054500Z/20261126T093000Z","20261128T070000Z/20261128T100000Z"];
 
 const ART = {
-  "g": "ganesha.jpg",
-  "m": "motif-m.jpg",
-  "b": "border-b.jpg",
-  "c": "corner.jpg",
+  "g": "ganesha.png",
+  "m": "motif-m.png",
+  "b": "border-b.png",
+  "c": "corner.png",
   "p1": "groom.jpg",
   "p2": "bride.jpg",
+  "gh": "ghibli-couple.jpg",
   "mu": "music.mp3"
 };

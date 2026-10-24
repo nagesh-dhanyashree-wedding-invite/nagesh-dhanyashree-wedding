@@ -1,0 +1,399 @@
+// =====================================================
+//  Nagesh & Dhanyashree — wedding site styles (SCSS)
+//  Compile with:  sass style.scss style.css
+// =====================================================
+
+// ---------- Design tokens ----------
+$paper:      #f3e4c4;
+$cream:      #fbf1da;
+$ink:        #4a1220;
+$maroon:     #5a1424;
+$deep:       #2e0914;
+$gold:       #b8892f;
+$gold-text:  #7a540f;   // darker gold: readable on cream
+$gold-light: #e6c476;
+$soft:       #7a5a50;
+$line:       #d9c08a;
+
+$serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+$sans:  "Mukta", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+$wide: 720px;   // breakpoint where layouts open up
+
+// ---------- Mixins ----------
+@mixin card {
+  background: linear-gradient(180deg, #fffaf0, #fbf0d8);
+  border: 1px solid $gold;
+  border-radius: 14px;
+  box-shadow: 0 16px 36px -18px rgba($maroon, .7);
+}
+@mixin gold-text {
+  background: linear-gradient(100deg, #b8892f 0%, #f7dc9a 35%, #c9983a 60%, #f7dc9a 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@mixin frame($shadow: 0 18px 40px -14px rgba($deep, .65)) {
+  border: 3px solid $gold;
+  outline: 1px solid $gold;
+  outline-offset: 6px;
+  box-shadow: $shadow;
+}
+@mixin arch {
+  border-radius: 999px 999px 8px 8px;
+  background-size: cover;
+  background-position: 50% 24%;
+}
+
+// ---------- Base ----------
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 64px;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  overflow-x: clip;
+  color: $ink;
+  font: 17px/1.65 $sans;
+  background-color: $paper;
+  background-image: radial-gradient(ellipse at 50% 0, #fbf3e0 0%, #f2e3c2 62%, #ead6ad 100%);
+  background-attachment: fixed;
+  &.lock { overflow: hidden; }
+}
+h1, h2, h3 { margin: 0; font-family: $serif; font-weight: 700; line-height: 1.1; }
+img, svg { max-width: 100%; }
+button { font: 600 16px $sans; cursor: pointer; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid $gold; outline-offset: 3px; }
+.mx { mix-blend-mode: multiply; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+// ---------- Buttons ----------
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; white-space: nowrap;
+  min-height: 46px; padding: 0 16px;
+  border: 1px solid $maroon; border-radius: 999px;
+  background: $maroon; color: $gold-light;
+  font: 600 14.5px $sans; letter-spacing: .03em; text-decoration: none;
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+  &:hover { transform: translateY(-2px); background: #6e1b2e; box-shadow: 0 10px 20px -10px $maroon; }
+  &.alt { background: transparent; color: $maroon; }
+  &.alt:hover { background: rgba($maroon, .07); }
+  &.wide { width: 100%; font-size: 17px; letter-spacing: .06em; }
+  &:disabled { opacity: .6; cursor: wait; transform: none; }
+}
+
+// ---------- Falling petals (cover + hero) ----------
+.pt {
+  position: absolute; top: 0; pointer-events: none; opacity: 0;
+  border-radius: 60% 0 60% 0;
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  0%   { opacity: 0;   transform: translate3d(0, -30px, 0) rotate(0); }
+  12%  { opacity: .85; }
+  100% { opacity: .5;  transform: translate3d(var(--dx, 0), var(--h, 100vh), 0) rotate(560deg); }
+}
+
+// ---------- Cover ----------
+#cover {
+  position: fixed; inset: 0; z-index: 30;
+  display: grid; place-items: center; padding: 20px; overflow: auto;
+  background: radial-gradient(circle at 50% 22%, #8a2038, $deep 80%);
+  transition: transform 1.1s cubic-bezier(.7, 0, .3, 1);
+  &.open { transform: translateY(-105%); pointer-events: none; }
+
+  .card {
+    position: relative; z-index: 1; width: min(430px, 100%);
+    padding: 58px 26px 38px; text-align: center;
+    background: $paper; outline: 1px solid $gold; outline-offset: -9px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, .7);
+    p { margin: 0; }
+  }
+  .cor {
+    position: absolute; width: 96px;
+    &.a { top: 0; left: 0; }
+    &.b { top: 0; right: 0; transform: scaleX(-1); }
+    &.c { bottom: 0; left: 0; transform: scaleY(-1); }
+    &.d { bottom: 0; right: 0; transform: scale(-1); }
+  }
+  .inv { font-weight: 600; font-size: 15px; color: $maroon; }
+  .ganesha { display: block; width: 62px; margin: 10px auto 0; }
+  .mono { display: block; width: 84px; height: 84px; margin: 2px auto 0; }
+  .ci { font: italic 500 22px $serif; color: $soft; }
+  .nm { font: italic 600 40px/1.15 $serif; color: $maroon; }
+  .wd { font: italic 500 20px $serif; color: $gold-text; }
+  .dt { margin: 12px 0 20px; color: $soft; }
+}
+.seal {
+  width: 96px; height: 96px; border: 0; border-radius: 50%;
+  color: $gold-light; letter-spacing: .14em; font-size: 14px;
+  background: radial-gradient(circle at 35% 30%, #9a2a44, $maroon 70%);
+  box-shadow: inset 0 0 0 4px $maroon, inset 0 0 0 5px $gold, 0 6px 18px rgba(0, 0, 0, .4);
+  animation: pulse 2.4s ease-in-out infinite;
+  transition: transform .2s ease;
+  &:hover { transform: scale(1.05); }
+}
+@keyframes pulse {
+  50% { box-shadow: inset 0 0 0 4px $maroon, inset 0 0 0 5px $gold, 0 6px 18px rgba(0, 0, 0, .4), 0 0 0 12px rgba($gold, .2); }
+}
+
+// ---------- Top bar ----------
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: stretch;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: rgba($deep, .94);
+  border-bottom: 1px solid $gold;
+  -webkit-backdrop-filter: saturate(1.2) blur(8px);
+  backdrop-filter: saturate(1.2) blur(8px);
+
+  nav {
+    flex: 1; min-width: 0; display: flex; align-items: center; gap: 4px;
+    padding: 0 6px 0 12px; overflow-x: auto; scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+    a {
+      flex: none; padding: 14px 10px; white-space: nowrap;
+      color: $gold-light; font-size: 15px; text-decoration: none;
+      transition: color .2s ease;
+      &:hover { color: #fff; }
+    }
+  }
+  .mbtn {
+    flex: none; width: 48px; margin: 6px 8px 6px 0;
+    border: 1px solid $gold; border-radius: 50%;
+    background: transparent; color: $gold-light; font-size: 20px; padding: 0;
+    &[aria-pressed="true"] { background: $gold; color: $deep; }
+  }
+}
+
+// ---------- Hero ----------
+#hero {
+  position: relative; overflow: hidden; text-align: center; color: $gold-light;
+  padding: 46px 20px 110px;
+  background: radial-gradient(ellipse at 50% 8%, #8a2038 0%, #4a0f1d 45%, $deep 100%);
+  &::before {
+    content: ""; position: absolute; inset: -40px; opacity: .2;
+    background: var(--hbg) center / cover; filter: blur(34px);
+  }
+  > * { position: relative; }
+  .bl { margin: 0 0 18px; font: italic 500 22px $serif; }
+  h1 {
+    margin-top: 22px; font-style: italic; font-weight: 600;
+    font-size: clamp(46px, 13vw, 92px); line-height: 1.04;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, .35);
+    span { display: block; @include gold-text; padding: 0 .06em; }
+    i { display: block; margin: 2px 0; font: italic 500 26px $serif; color: $gold; }
+  }
+  .when { margin: 16px 0 6px; font-size: 18px; letter-spacing: .02em; }
+  .inv2 { max-width: 440px; margin: 0 auto 28px; font-style: italic; color: rgba($gold-light, .85); }
+}
+.hp {
+  position: relative; display: grid; place-items: center;
+  width: min(420px, 92vw, 46svh); aspect-ratio: 1; margin: 0 auto;
+  svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 140s linear infinite; }
+  .arch { position: relative; width: 56%; aspect-ratio: 3 / 4; @include arch; @include frame; }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.count {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;
+  div {
+    min-width: 72px; padding: 10px 6px; border: 1px solid $gold; border-radius: 12px;
+    background: linear-gradient(180deg, rgba(#fff, .09), rgba(#fff, .02));
+    box-shadow: inset 0 1px 0 rgba(#fff, .12);
+  }
+  b { display: block; font: 700 34px $serif; color: #f7dc9a; }
+  span { font-size: 13px; }
+  .done { font: italic 600 34px $serif; }
+}
+
+// ---------- At a glance ----------
+.glance {
+  @include card;
+  position: relative; z-index: 3;
+  width: calc(100% - 32px); max-width: 840px; margin: -62px auto 0; padding: 18px 12px 16px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 0; text-align: center;
+  > div:not(.ga) {
+    padding: 2px 6px;
+    & + div:not(.ga) { border-left: 1px solid rgba($gold, .45); }
+  }
+  span { display: block; font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: $gold-text; }
+  b { display: block; margin-top: 2px; font: 700 clamp(20px, 5.4vw, 26px) $serif; color: $maroon; line-height: 1.15; }
+  small { display: block; color: $soft; font-size: 14px; }
+  .ga { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding-top: 6px; .btn { flex: 1 1 150px; } }
+}
+
+// ---------- Sections ----------
+.s {
+  max-width: 920px; margin: 0 auto; padding: 84px 22px; text-align: center;
+  h2 { font-size: clamp(38px, 8vw, 54px); color: $maroon; letter-spacing: .01em; text-shadow: 0 1px 0 rgba(#fff, .4); }
+  .sub { margin: 0 0 34px; font-size: 18px; font-style: italic; color: $soft; }
+}
+.orn { display: block; height: 58px; margin: 0 auto 8px; }
+.dv {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  width: min(260px, 70%); margin: 12px auto 16px; color: $gold;
+  i { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, $gold, transparent); }
+}
+.dark {
+  max-width: none; color: $gold-light;
+  background: radial-gradient(ellipse at 50% 0, #6a1a2e 0%, $deep 72%);
+  h2 { color: #f7dc9a; text-shadow: none; }
+  .sub { color: rgba($gold-light, .8); }
+}
+
+// ---------- Couple ----------
+.names {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: stretch;
+  figure { margin: 0; padding: 18px 12px; min-width: 0; text-align: center; border-radius: 14px; background: linear-gradient(180deg, rgba(#fffaf0, .65), rgba(#fffaf0, 0)); }
+  .arch.sm { width: 100%; max-width: 220px; aspect-ratio: 3 / 4; margin: 0 auto 16px; @include arch; @include frame(0 14px 34px -10px rgba($deep, .6)); }
+  h3 { font-size: clamp(24px, 6.2vw, 32px); overflow-wrap: anywhere; color: $maroon; }
+  b { display: block; color: $gold-text; font-size: 17px; }
+  .q { margin: 8px 0 0; font-style: italic; font-size: 16px; line-height: 1.5; color: $soft; }
+}
+
+// ---------- Story ----------
+.stl {
+  position: relative; max-width: 560px; margin: 0 auto; padding-left: 38px; text-align: left;
+  &::before { content: ""; position: absolute; left: 9px; top: 10px; bottom: 10px; width: 2px; background: linear-gradient($gold, rgba($line, .3) 70%, transparent); }
+  .si {
+    position: relative; margin-bottom: 22px; padding: 14px 18px; border-radius: 12px;
+    background: rgba(#fffaf0, .75); box-shadow: 0 8px 20px -14px rgba($maroon, .6);
+    &::before { content: ""; position: absolute; left: -38px; top: 18px; width: 20px; height: 20px; border-radius: 50%; background: $paper; border: 2px solid $gold; box-shadow: inset 0 0 0 4px $maroon; }
+    h3 { font-size: 27px; color: $maroon; }
+    p { margin: 4px 0 0; color: $soft; }
+  }
+}
+
+// ---------- Gallery ----------
+.car { position: relative; width: min(420px, calc(100vw - 44px)); margin: 0 auto;
+  button {
+    position: absolute; top: 50%; z-index: 2; width: 46px; height: 46px; margin-top: -23px; padding: 0;
+    border: 1px solid $gold; border-radius: 50%; color: $gold-light; background: rgba($deep, .72);
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+    transition: transform .2s ease, background .2s ease;
+    &:hover { background: $gold; color: $deep; transform: scale(1.06); }
+    &#pv { left: -10px; }
+    &#nx { right: -10px; }
+  }
+}
+.slide {
+  position: relative; overflow: hidden; width: 100%; aspect-ratio: 3 / 4; border-radius: 10px; background: #000;
+  @include frame(0 24px 50px -16px rgba(#000, .7));
+  outline-offset: 8px; touch-action: pan-y;
+  div { position: absolute; inset: 0; background-position: center; background-repeat: no-repeat; }
+  #sbg { background-size: cover; filter: blur(16px) brightness(.75); transform: scale(1.25); }
+  #sfg { background-size: contain; }
+}
+#cnt { margin: 22px 0 12px; font-size: 14px; letter-spacing: .16em; text-transform: uppercase; opacity: .85; }
+.thumbs {
+  display: flex; gap: 8px; max-width: 100%; padding: 6px 4px; overflow-x: auto; scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+  button {
+    flex: none; width: 46px; height: 62px; padding: 0; border: 2px solid transparent; border-radius: 6px; opacity: .6;
+    background-size: cover; background-position: center; transition: opacity .2s ease, border-color .2s ease;
+    &.on { border-color: $gold; opacity: 1; }
+    &:first-child { margin-left: auto; }
+    &:last-child  { margin-right: auto; }
+  }
+}
+
+// ---------- Events ----------
+.evl { display: grid; gap: 22px; max-width: 620px; margin: 0 auto; text-align: left; }
+.ec {
+  @include card; padding: 22px 20px 20px;
+  header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .bd {
+    flex: none; display: grid; place-content: center; width: 62px; height: 62px; border-radius: 50%; text-align: center;
+    background: radial-gradient(circle at 35% 30%, #9a2a44, $maroon 70%); color: $gold-light; border: 2px solid $gold;
+    b { font: 700 26px/1 $serif; }
+    span { font-size: 10px; letter-spacing: .12em; }
+  }
+  .et { flex: 1; min-width: 0; }
+  h3 { font-size: 27px; color: $maroon; }
+  time { display: block; color: $gold-text; font-weight: 600; font-size: 14px; line-height: 1.35; margin-top: 2px; }
+  header img { flex: none; width: 56px; height: auto; }
+  .note { margin: 0 0 8px; font-style: italic; color: $soft; }
+  .meta { display: grid; grid-template-columns: 68px 1fr; gap: 8px; margin: 6px 0; color: $soft;
+    span { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: $gold-text; padding-top: 4px; }
+  }
+  .ab { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; .btn { flex: 1 1 128px; } }
+}
+.host {
+  max-width: 560px; margin: 40px auto 0; padding: 20px; border-radius: 14px; color: $soft;
+  background: rgba(#fffaf0, .55); border: 1px solid rgba($line, .7);
+  p { margin: 0 0 14px; &:last-child { margin: 0; } }
+  b { color: $maroon; }
+}
+.strip { display: block; width: min(300px, 70%); margin: 30px auto 0; }
+
+// ---------- Traditions ----------
+.trl {
+  max-width: 620px; margin: 0 auto; text-align: left;
+  details {
+    margin-bottom: 10px; border: 1px solid $gold; border-radius: 12px; background: $cream;
+    box-shadow: 0 8px 22px -14px rgba($maroon, .6); transition: box-shadow .2s ease;
+    &[open] { box-shadow: 0 14px 30px -14px rgba($maroon, .7); }
+  }
+  summary {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 54px; padding: 12px 18px;
+    cursor: pointer; list-style: none; font: 700 25px $serif; color: $maroon;
+    &::-webkit-details-marker { display: none; }
+    &::after { content: "+"; font-size: 26px; color: $gold-text; }
+  }
+  details[open] summary::after { content: "\2013"; }
+  p { margin: 0; padding: 0 18px 16px; color: $soft; }
+}
+
+// ---------- Blessings ----------
+form {
+  display: grid; gap: 12px; max-width: 520px; margin: 0 auto; text-align: left;
+  input, textarea {
+    width: 100%; padding: 14px; border: 1px solid $gold; border-radius: 12px; background: #fffaf0; color: $ink; font: inherit;
+    box-shadow: inset 0 1px 3px rgba($maroon, .08); transition: border-color .2s ease, box-shadow .2s ease;
+    &:focus { outline: none; border-color: $maroon; box-shadow: 0 0 0 3px rgba($maroon, .14); }
+  }
+}
+.ty {
+  max-width: 520px; margin: 16px auto 0; padding: 12px 16px; border-radius: 12px; text-align: center; font-weight: 600;
+  background: #fffaf0; color: $gold-text; box-shadow: 0 8px 20px -12px rgba($maroon, .5);
+  &.err { color: #8a1c1c; }
+}
+
+// ---------- Footer ----------
+footer {
+  padding: 48px 20px calc(60px + env(safe-area-inset-bottom, 0px)); text-align: center; color: $gold-light;
+  background: radial-gradient(ellipse at 50% 0, $maroon, $deep 75%);
+  .fm { display: block; width: 78px; height: 78px; margin: 0 auto 8px; }
+  h3 { font: italic 600 clamp(34px, 9vw, 48px) $serif; @include gold-text; padding: 0 .06em; }
+  p { margin: 6px 0; }
+  .ht { letter-spacing: .08em; }
+  .wa {
+    display: inline-block; margin-top: 16px; padding: 12px 24px; border: 1px solid $gold; border-radius: 999px;
+    text-decoration: none; font-weight: 600; transition: background .2s ease;
+    &:hover { background: rgba(#fff, .08); }
+  }
+}
+
+// ---------- Scroll reveal (only when JS is running) ----------
+.js .rv { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+.js .rv.in { opacity: 1; transform: none; }
+
+// ---------- Larger screens ----------
+@media (min-width: $wide) {
+  .names .arch.sm { max-width: 260px; }
+  .evl { max-width: 700px; }
+  .glance { padding: 22px 16px 20px; }
+}
+
+// ---------- Reduced motion ----------
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  #cover { transition: none; }
+  .pt { display: none; }
+  .hp svg, .seal { animation: none; }
+  .js .rv { opacity: 1; transform: none; transition: none; }
+}
